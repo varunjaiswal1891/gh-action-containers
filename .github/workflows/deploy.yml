@@ -13,11 +13,19 @@ jobs:
         container:
             image: node:16
         env:
-            MONGODB_CONNECTION_PROTOCOL: mongodb+srv
-            MONGODB_CLUSTER_ADDRESS: clustervjtest.sskufcj.mongodb.net   
-            MONGODB_USERNAME: ${{ secrets.MONGODB_USERNAME }}      
-            MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}      
+            MONGODB_CONNECTION_PROTOCOL: mongodb
+            MONGODB_CLUSTER_ADDRESS: mongodb-service   
+            MONGODB_USERNAME: root      
+            MONGODB_PASSWORD: example      
             PORT: 8080
+        services:
+            mongodb-service:
+                image: mongo
+                env:
+                    MONGO_INITDB_ROOT_USERNAME: root
+                    MONGO_INITDB_ROOT_PASSWORD: example
+                ports:
+                    - 27017:27017
         steps:
             - name: Checkout code
               uses: actions/checkout@v2
